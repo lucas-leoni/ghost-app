@@ -1,6 +1,10 @@
 const express = require('express');
 const app = express();
 
+app.set('views', './app/views');
+
+app.use(express.static('./app/public'));
+
 // estamos adotando o servidor do Node ao invés do express
 const http = require('http').createServer(app);
 const io = require('socket.io') (http);

@@ -11,20 +11,39 @@
       integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
+    />
   </head>
   <body>
-    <div class="bg min-vh-100">
-      <h1>Ghost App - Chat</h1>
-
-      <div>
-        <div id="chat" class="container bg-light"></div>
+    <div class="container p-0">
+      <div class="d-flex align-items-center my-3">
+        <img class="me-4" src="images/ghost.png" />
+        <h1 class="text-white">Ghost Chat</h1>
       </div>
 
-      <nav class="navbar fixed-bottom">
-        <div class="container border border-danger">
-          <div class="col p-3">
+      <div class="row m-0 justify-content-between">
+        <div id="chat" class="col-9 bg-light rounded"></div>
+        <div class="col-3 p-0">
+          <div class="ms-5 p-3 bg-light rounded">
+            <ul class="m-0 text-success fs-4 list-unstyled">
+              <li><i class="bi bi-person-fill"></i>Usuário</li>
+              <li><i class="bi bi-person-fill"></i>Usuário</li>
+              <li><i class="bi bi-person-fill"></i>Usuário</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <nav class="navbar fixed-bottom mb-4">
+        <div class="container p-0">
+          <div class="col-9 bg-light rounded px-5 py-4">
             <div class="mb-3">
-              <label for="username" class="form-label">Usuário</label>
+              <label for="username" class="form-label">
+                <b>Usuário</b>
+              </label>
               <input
                 id="username"
                 type="text"
@@ -33,13 +52,13 @@
               />
             </div>
             <div class="mb-3">
-              <label for="exampleFormControlTextarea1" class="form-label"
-                >Mensagem</label
-              >
+              <label for="exampleFormControlTextarea1" class="form-label">
+                <b>Mensagem</b>
+              </label>
               <textarea
                 id="mensagem"
                 class="form-control"
-                rows="3"
+                rows="2"
                 placeholder="Insira uma mensagem"
               ></textarea>
             </div>
@@ -76,15 +95,38 @@
 
         const usuario = userField.value;
         const message = messageField.value;
-        socket.emit("iniciaChat", { usuario, message });
+        const date = new Date().toLocaleDateString();
+        const time = new Date().toLocaleTimeString().slice(0, 5);
+        socket.emit("iniciaChat", { usuario, message, date, time });
       }
 
       socket.on("showMessage", (data) => {
         console.log("Resultado: ", data);
         const chatScreen = document.getElementById("chat");
-        const p = document.createElement("p");
-        p.innerHTML = `User: ${data.usuario} <br> Mensagem: ${data.message}`;
-        chatScreen.append(p);
+        const col = document.createElement("div");
+        col.classList.add(
+          "col",
+          "bg-mensagem",
+          "text-white",
+          "rounded",
+          "p-2",
+          "m-3"
+        );
+        const colors = [
+          "text-primary",
+          "text-secondary",
+          "text-success",
+          "text-danger",
+          "text-warning",
+          "text-info",
+          "text-dark",
+        ];
+        const randomElement = colors[Math.floor(Math.random() * colors.length)];
+        col.innerHTML = `<p class="m-0">
+            <b class="${randomElement}">${data.usuario}</b> <i class="text-white">${data.time} - ${data.date}</i><br/>
+            ${data.message}
+          </p>`;
+        chatScreen.append(col);
       });
     </script>
   </body>
