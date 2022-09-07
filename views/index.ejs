@@ -4,37 +4,85 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fragatta - Web Socket</title>
+    <title>Ghost App - Chat</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+      crossorigin="anonymous"
+    />
   </head>
   <body>
-    <h1>Ghost App - Chat</h1>
+    <div class="bg min-vh-100">
+      <h1>Ghost App - Chat</h1>
 
-    <input type="text" id="username" placeholder="Usuário"> <br>
-    <input type="text" id="mensagem" placeholder="Insira a mensagem"> <br>
-    <button onclick="enviar()" id="btnEnviar">Enviar</button>
+      <div>
+        <div id="chat" class="container bg-light"></div>
+      </div>
 
-    <div id="chat"></div>
+      <nav class="navbar fixed-bottom">
+        <div class="container border border-danger">
+          <div class="col p-3">
+            <div class="mb-3">
+              <label for="username" class="form-label">Usuário</label>
+              <input
+                id="username"
+                type="text"
+                class="form-control"
+                placeholder="Usuário"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="exampleFormControlTextarea1" class="form-label"
+                >Mensagem</label
+              >
+              <textarea
+                id="mensagem"
+                class="form-control"
+                rows="3"
+                placeholder="Insira uma mensagem"
+              ></textarea>
+            </div>
+            <div class="d-flex justify-content-center">
+              <button
+                onclick="enviar()"
+                id="btnEnviar"
+                type="button"
+                class="btn btn-primary btn-lg"
+              >
+                Enviar
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
 
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+      crossorigin="anonymous"
+    ></script>
     <script src="/socket.io/socket.io.js"></script>
     <script>
       // apontando a url do servidor para o client se conectar
-      const SERVER_URL = 'http://localhost:5000';
+      const SERVER_URL = "http://localhost:5000";
       // abrindo uma conexão do client com o servidor
       const socket = io(SERVER_URL);
 
       function enviar() {
-        const userField = document.getElementById('username');
-        const messageField = document.getElementById('mensagem');
+        const userField = document.getElementById("username");
+        const messageField = document.getElementById("mensagem");
 
         const usuario = userField.value;
         const message = messageField.value;
-        socket.emit('iniciaChat', { usuario, message });
-      };
+        socket.emit("iniciaChat", { usuario, message });
+      }
 
-      socket.on('showMessage', (data) => {
-        console.log('Resultado: ', data);
-        const chatScreen = document.getElementById('chat');
-        const p = document.createElement('p');
+      socket.on("showMessage", (data) => {
+        console.log("Resultado: ", data);
+        const chatScreen = document.getElementById("chat");
+        const p = document.createElement("p");
         p.innerHTML = `User: ${data.usuario} <br> Mensagem: ${data.message}`;
         chatScreen.append(p);
       });
