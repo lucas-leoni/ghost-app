@@ -1,4 +1,5 @@
-body, .bg-mensagem {
+body,
+.bg-mensagem {
   background: #0f2027;
   background: -webkit-linear-gradient(to right, #2c5364, #203a43, #0f2027);
   background: linear-gradient(to right, #2c5364, #203a43, #0f2027);
@@ -7,4 +8,30 @@ body, .bg-mensagem {
 #chat {
   height: 50vh;
   overflow-y: auto;
+}
+
+.bg-list {
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+*::-webkit-scrollbar {
+  width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #f8f9fa;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  /* background: orange; */
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #0f2027;
+  background: -webkit-linear-gradient(to right, #2c5364, #203a43, #0f2027);
+  background: linear-gradient(to right, #2c5364, #203a43, #0f2027);
+  /* background-color: blue; */
+  border-radius: 20px;
+  border: 3px solid #f8f9fa;
+  /* border: 3px solid orange; */
 }

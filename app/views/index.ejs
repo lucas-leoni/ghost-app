@@ -19,25 +19,25 @@
   </head>
   <body>
     <div class="container p-0">
-      <div class="d-flex align-items-center my-3">
+      <div class="d-flex align-items-center my-4">
         <img class="me-4" src="images/ghost.png" />
         <h1 class="text-white">Ghost Chat</h1>
       </div>
 
       <div class="row m-0 justify-content-between">
         <div id="chat" class="col-9 bg-light rounded"></div>
-        <div class="col-3 p-0">
+        <div class="col-3 p-0 bg-list rounded">
           <div class="ms-5 p-3 bg-light rounded">
-            <ul class="m-0 text-success fs-4 list-unstyled">
-              <li><i class="bi bi-person-fill"></i>Usuário</li>
-              <li><i class="bi bi-person-fill"></i>Usuário</li>
-              <li><i class="bi bi-person-fill"></i>Usuário</li>
+            <ul id="users-list" class="m-0 text-success fs-5 list-unstyled">
+              <li id="users-online py-2">
+                <b>Usuários online</b>
+              </li>
             </ul>
           </div>
         </div>
       </div>
 
-      <nav class="navbar fixed-bottom mb-4">
+      <nav class="navbar mt-4">
         <div class="container p-0">
           <div class="col-9 bg-light rounded px-5 py-4">
             <div class="mb-3">
@@ -109,7 +109,7 @@
           "bg-mensagem",
           "text-white",
           "rounded",
-          "p-2",
+          "p-3",
           "m-3"
         );
         const colors = [
@@ -127,6 +127,11 @@
             ${data.message}
           </p>`;
         chatScreen.append(col);
+        const usersList = document.getElementById("users-list");
+        const li = document.createElement("li");
+        li.classList.add("py-2");
+        li.innerHTML = `<i class="bi bi-person-fill me-2"></i>${data.usuario}`;
+        usersList.append(li);
       });
     </script>
   </body>
